@@ -24,7 +24,7 @@
     "watchify": "^3.6.1"
   },
   "scripts": {
-    "build": "babel --extensions .es6 --ignore node_modules/**,__tests__/** --out-dir . .",
+    "build": "babel --extensions .es6 --ignore node_modules/**,__tests__/**,playground/** --out-dir . .",
     "build:watch": "babel --watch --extensions .es6 --ignore node_modules/**,__tests__/** --out-dir . .",
     "clean": "find . -name '*.js*' -type f -not -path './package.json' -not -path './node_modules/*' -exec rm {} \\;",
     "prepublish": "npm run build",
