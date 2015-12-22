@@ -1,4 +1,6 @@
-export default function createActions(nodes, {mountPoint='tracks'}={}) {
+import dotKey from 'dot-key';
+
+export default function createActions(nodes, mountPoint='tracks') {
   const END = `${mountPoint}/END`;
   function end(id) {
     return {
@@ -12,7 +14,7 @@ export default function createActions(nodes, {mountPoint='tracks'}={}) {
   const JUMP = `${mountPoint}/JUMP`;
   function jump(id, to) {
     return function jumpThunk(dispatch, getState) {
-      const track = getState()[mountPoint][id];
+      const track = dotKey(mountPoint, getState())[id];
 
       if (track && track.isReady) {
         if (nodes.jump(id, to)) {
@@ -31,7 +33,7 @@ export default function createActions(nodes, {mountPoint='tracks'}={}) {
   const LOAD = `${mountPoint}/LOAD`;
   function load(id, src=id) {
     return function loadThunk(dispatch, getState) {
-      const track = getState()[mountPoint][id];
+      const track = dotKey(mountPoint, getState())[id];
 
       if (typeof track === 'undefined') {
         dispatch({
@@ -52,7 +54,7 @@ export default function createActions(nodes, {mountPoint='tracks'}={}) {
   const PAUSE = `${mountPoint}/PAUSE`;
   function pause(id) {
     return function pauseThunk(dispatch, getState) {
-      const track = getState()[mountPoint][id];
+      const track = dotKey(mountPoint, getState())[id];
 
       if (track && track.isReady && track.isPlaying) {
         nodes.pause(id);
@@ -70,7 +72,7 @@ export default function createActions(nodes, {mountPoint='tracks'}={}) {
   const PLAY = `${mountPoint}/PLAY`;
   function play(id) {
     return function playThunk(dispatch, getState) {
-      const track = getState()[mountPoint][id];
+      const track = dotKey(mountPoint, getState())[id];
 
       if (track && track.isReady && !track.isPlaying) {
         nodes.play(id, time => dispatch(tick(id, time)));
@@ -88,7 +90,7 @@ export default function createActions(nodes, {mountPoint='tracks'}={}) {
   const TICK = `${mountPoint}/TICK`;
   function tick(id, time) {
     return function tickThunk(dispatch, getState) {
-      const track = getState()[mountPoint][id];
+      const track = dotKey(mountPoint, getState())[id];
 
       if (track && track.isReady) {
         dispatch({

@@ -3,8 +3,24 @@ import { actions as tracksActions, Component as Track } from './tracks';
 import { connect } from 'react-redux';
 import React from 'react';
 
-export const actions = playlist.createActions();
+export const actions = playlist.createActions('playpause.playlist');
 export const reducer = playlist.createReducer(actions, tracksActions);
+
+function pause() {
+  return function pauseThunk(dispatch, getState) {
+    const { playlist } = getState().playpause;
+
+    dispatch(tracksActions.pause(playlist.tracks[playlist.current]));
+  }
+}
+
+function play() {
+  return function playThunk(dispatch, getState) {
+    const { playlist } = getState().playpause;
+
+    dispatch(tracksActions.play(playlist.tracks[playlist.current]));
+  }
+}
 
 const Playlist = props => (
   <div>
@@ -18,13 +34,13 @@ const Playlist = props => (
       onClick={() => props.dispatch(actions.nextOrStop())}>next</button>
 
     {props.isPlaying ?
-      <button onClick={() => props.dispatch(tracksActions.pause(props.tracks[props.current]))}>pause</button> :
-      <button onClick={() => props.dispatch(tracksActions.play(props.tracks[props.current]))}>play</button>}
+      <button onClick={() => props.dispatch(pause())}>pause</button> :
+      <button onClick={() => props.dispatch(play())}>play</button>}
   </div>
 );
 
 function mapStateToProps(state, props) {
-  return state.playlist;
+  return state.playpause.playlist;
 }
 
 export const Component = connect(mapStateToProps)(Playlist);

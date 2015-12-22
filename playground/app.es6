@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import createLogger from 'redux-logger';
 import dj from './dj';
+import playpauseReducer from './playpause-reducer';
 import promiseMiddleware from 'redux-promise';
 import React from 'react';
 import thunkMiddleware from 'redux-thunk';
@@ -22,19 +23,21 @@ const createStoreWithMiddleware = applyMiddleware(
 )(createStore);
 
 const rootReducer = combineReducers({
-  playlist: playlist.reducer,
-  tracks: tracks.reducer
+  playpause: playpauseReducer
 });
 
 const store = createStoreWithMiddleware(rootReducer, {
-  playlist: {
-    current: 0,
-    isPlaying: false,
-    tracks: [
-      '/audio-1.mp3',
-      '/audio-2.mp3',
-      '/audio-3.mp3',
-    ]
+  playpause: {
+    playlist: {
+      current: 0,
+      isPlaying: false,
+      tracks: [
+        '/audio-1.mp3',
+        '/audio-2.mp3',
+        '/audio-3.mp3',
+      ]
+    },
+    tracks: {}
   }
 });
 

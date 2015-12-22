@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import createKnockKnockGo from 'knock-knock-go';
 import React, { Component as ReactComponent } from 'react';
 
-export const actions = tracks.createActions(nodes);
+export const actions = tracks.createActions(nodes, 'playpause.tracks');
 export const reducer = tracks.createReducer(actions);
 
 class Track extends ReactComponent {
@@ -43,7 +43,7 @@ const KnockKnockTrack = knockKnockGo(
 );
 
 function mapStateToProps(state, props) {
-  return state.tracks[props.id] || {};
+  return state.playpause.tracks[props.id] || {};
 }
 
 export const Component = connect(mapStateToProps)(KnockKnockTrack);

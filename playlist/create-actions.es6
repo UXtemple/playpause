@@ -1,7 +1,9 @@
-export default function createActions({mountPoint='playlist'}={}) {
+import dotKey from 'dot-key';
+
+export default function createActions(mountPoint='playlist') {
   function nextOrStop() {
     return function nextOrStopThunk(dispatch, getState) {
-      const state = getState()[mountPoint];
+      const state = dotKey(mountPoint, getState());
       const nextIndex = state.current + 1;
 
       if (nextIndex < state.tracks.length) {
@@ -12,7 +14,7 @@ export default function createActions({mountPoint='playlist'}={}) {
 
   function prevOrStop() {
     return function prevOrStopThunk(dispatch, getState) {
-      const state = getState()[mountPoint];
+      const state = dotKey(mountPoint, getState());
       const prevIndex = state.current - 1;
 
       if (prevIndex >= 0) {
@@ -24,7 +26,7 @@ export default function createActions({mountPoint='playlist'}={}) {
   const SET_CURRENT = `${mountPoint}/SET_CURRENT`;
   function setCurrent(current) {
     return function setCurrentThunk(dispatch, getState) {
-      const state = getState()[mountPoint];
+      const state = dotKey(mountPoint, getState());
 
       if (current >= 0 && current < state.tracks.length) {
         dispatch({
