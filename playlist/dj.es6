@@ -1,10 +1,10 @@
-import { actions as tracksActions }  from './tracks';
+import dotKey from 'dot-key';
 
-export default function dj(store) {
-  let state = store.getState().playpause.playlist;
+export default function dj(store, mountPoint='playlist', tracksActions) {
+  let state = dotKey(mountPoint, store.getState());
 
   return store.subscribe(function() {
-    const next = store.getState().playpause.playlist;
+    const next = dotKey(mountPoint, store.getState());
 
     if (state.current !== next.current && state.current !== 'undefined' && state.isPlaying) {
       store.dispatch(tracksActions.pause(state.tracks[state.current]));

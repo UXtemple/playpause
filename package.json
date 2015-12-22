@@ -1,5 +1,6 @@
 {
   "name": "playpause",
+  "version": "1.1.0",
   "description": "audio playlist",
   "main": "index.js",
   "dependencies": {

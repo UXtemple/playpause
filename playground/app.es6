@@ -1,10 +1,10 @@
 import * as tracks from './tracks';
-import * as playlist from './playlist';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { Component as Playlist } from './playlist';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import createLogger from 'redux-logger';
-import dj from './dj';
+import dj from '../playlist/dj';
 import playpauseReducer from './playpause-reducer';
 import promiseMiddleware from 'redux-promise';
 import React from 'react';
@@ -41,17 +41,15 @@ const store = createStoreWithMiddleware(rootReducer, {
   }
 });
 
-const unsubscribeDj = dj(store);
+const unsubscribeDj = dj(store, 'playpause.playlist', tracks.actions);
 
 window.$p = {
-  playlist,
-  tracks,
   store
 };
 
 render(
   <Provider store={store}>
-    <playlist.Component />
+    <Playlist />
   </Provider>,
   document.getElementById('root')
 );
