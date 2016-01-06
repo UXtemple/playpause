@@ -1,7 +1,7 @@
 import * as playlist from './playlist';
 import * as tracks from './tracks';
 
-const {END, JUMP, LOAD, PAUSE, PLAY, TICK} = tracks.actions;
+const {END, JUMP, LOAD, PAUSE, PLAY, STOP, TICK} = tracks.actions;
 const {SET_CURRENT, SET_TRACKS} = playlist.actions;
 
 const DEFAULT = {
@@ -33,6 +33,7 @@ export default function playpauseReducer(state=DEFAULT, action) {
     case END:
     case PAUSE:
     case PLAY:
+    case STOP:
       nextState = {
         ...state,
         playlist: playlist.reducer(state.playlist, action),

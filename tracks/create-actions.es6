@@ -87,6 +87,24 @@ export default function createActions(nodes, mountPoint='tracks') {
     };
   }
 
+  const STOP = `${mountPoint}/STOP`;
+  function stop(id) {
+    return function stopThunk(dispatch, getState) {
+      const track = dotKey(mountPoint, getState())[id];
+
+      if (track && track.isReady && track.isPlaying) {
+        nodes.stop(id);
+
+        dispatch({
+          type: STOP,
+          payload: {
+            id
+          }
+        });
+      }
+    }
+  }
+
   const TICK = `${mountPoint}/TICK`;
   function tick(id, time) {
     return function tickThunk(dispatch, getState) {
@@ -115,6 +133,8 @@ export default function createActions(nodes, mountPoint='tracks') {
     pause,
     PLAY,
     play,
+    STOP,
+    stop,
     TICK,
     tick
   };

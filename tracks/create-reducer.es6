@@ -1,4 +1,4 @@
-export default function createReducer({END, JUMP, LOAD, PAUSE, PLAY, TICK}) {
+export default function createReducer({END, JUMP, LOAD, PAUSE, PLAY, STOP, TICK}) {
   return function tracksReducer(state={}, action) {
     let nextState = state;
     let id;
@@ -60,6 +60,16 @@ export default function createReducer({END, JUMP, LOAD, PAUSE, PLAY, TICK}) {
       nextTrack = {
         ...state[id],
         isPlaying: false
+      };
+      break;
+
+    case STOP:
+      id = action.payload.id;
+
+      nextTrack = {
+        ...state[id],
+        isPlaying: false,
+        time: 0
       };
       break;
 
