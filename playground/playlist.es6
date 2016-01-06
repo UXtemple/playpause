@@ -41,12 +41,12 @@ const Playlist = props => (
     <button disabled={props.current === props.tracks.length - 1}
       onClick={() => props.dispatch(actions.nextOrStop())}>next</button>
 
-    {props.isPlaying ?
-      <button onClick={() => props.dispatch(pause())}>pause</button> :
-      <button onClick={() => props.dispatch(play())}>play</button>}
-
-    <button disabled={!(props.isPlaying)}
-      onClick={() => props.dispatch(stop())}>stop</button>
+    {props.isPlaying ? (
+      <span>
+        <button onClick={() => props.dispatch(pause())}>pause</button>
+        <button onClick={() => props.dispatch(stop())}>stop</button>
+      </span>
+    ) : <button onClick={() => props.dispatch(play())}>play</button>}
   </div>
 );
 
