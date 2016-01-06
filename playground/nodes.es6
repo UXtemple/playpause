@@ -45,6 +45,11 @@ export function play(id, tick) {
   }
 }
 
+export function stop(id) {
+  pause(id);
+  jump(id, 0);
+}
+
 function startTicking(id, tick) {
   nodes[id].ticker = setInterval(function tickInterval() {
     tick(nodes[id].audio.currentTime);

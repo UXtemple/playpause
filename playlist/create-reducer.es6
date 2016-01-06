@@ -1,4 +1,4 @@
-export default function createReducer({SET_CURRENT, SET_TRACKS}, {END, PAUSE, PLAY}) {
+export default function createReducer({SET_CURRENT, SET_TRACKS}, {END, PAUSE, PLAY, STOP}) {
   return function playlistReducer(state={tracks: []}, action) {
     let nextState = state;
     let nextCurrent;
@@ -21,6 +21,7 @@ export default function createReducer({SET_CURRENT, SET_TRACKS}, {END, PAUSE, PL
       break;
 
     case PAUSE:
+    case STOP:
       const pausedIndex = state.tracks.indexOf(action.payload.id);
 
       if (pausedIndex === state.current) {

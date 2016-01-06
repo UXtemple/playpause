@@ -11,6 +11,7 @@ import React from 'react';
 import thunkMiddleware from 'redux-thunk';
 
 const loggerMiddleware = createLogger({
+  predicate: (getState, action) => action.type !== tracks.actions.TICK,
   collapsed: true,
   level: 'info',
   logger: console

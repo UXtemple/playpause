@@ -22,6 +22,14 @@ function play() {
   }
 }
 
+function stop() {
+  return function playThunk(dispatch, getState) {
+    const { playlist } = getState().playpause;
+
+    dispatch(tracksActions.stop(playlist.tracks[playlist.current]));
+  }
+}
+
 const Playlist = props => (
   <div>
     {props.tracks.map((id, i) => <Track id={id} isCurrent={props.current === i} key={i} />)}
@@ -33,9 +41,12 @@ const Playlist = props => (
     <button disabled={props.current === props.tracks.length - 1}
       onClick={() => props.dispatch(actions.nextOrStop())}>next</button>
 
-    {props.isPlaying ?
-      <button onClick={() => props.dispatch(pause())}>pause</button> :
-      <button onClick={() => props.dispatch(play())}>play</button>}
+    {props.isPlaying ? (
+      <span>
+        <button onClick={() => props.dispatch(pause())}>pause</button>
+        <button onClick={() => props.dispatch(stop())}>stop</button>
+      </span>
+    ) : <button onClick={() => props.dispatch(play())}>play</button>}
   </div>
 );
 
