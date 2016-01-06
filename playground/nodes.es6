@@ -46,9 +46,8 @@ export function play(id, tick) {
 }
 
 export function stop(id) {
-  stopTicking(id);
+  pause(id);
   jump(id, 0);
-  nodes[id].audio.pause();
 }
 
 function startTicking(id, tick) {
