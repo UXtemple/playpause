@@ -17,8 +17,6 @@ test('invoke playlist.create-actions with no args', t => {
   t.is(typeof actions.prevOrStop, 'function', 'actions.prevOrStop is a function');
   t.is(typeof actions.setCurrent, 'function', 'actions.setCurrent is a function');
   t.is(typeof actions.setTracks, 'function', 'actions.setTracks is a function');
-  t.isNot(typeof actions.SET_CURRENT, 'function', 'actions.SET_CURRENT is not a function');
-  t.isNot(typeof actions.SET_TRACKS, 'function', 'actions.SET_TRACKS is not a function');
   t.is(typeof actions.SET_CURRENT, 'string', 'actions.SET_CURRENT is a string');
   t.is(typeof actions.SET_TRACKS, 'string', 'actions.SET_TRACKS is a string');
   t.is(actions.SET_CURRENT, `${defaultMountpoint}/SET_CURRENT`, 'default mountpoint is playlist');
@@ -34,8 +32,6 @@ test('invoke playlist.create-actions with string arg', t => {
   t.is(typeof actions.prevOrStop, 'function', 'actions.prevOrStop is a function');
   t.is(typeof actions.setCurrent, 'function', 'actions.setCurrent is a function');
   t.is(typeof actions.setTracks, 'function', 'actions.setTracks is a function');
-  t.isNot(typeof actions.SET_CURRENT, 'function', 'actions.SET_CURRENT is not a function');
-  t.isNot(typeof actions.SET_TRACKS, 'function', 'actions.SET_TRACKS is not a function');
   t.is(typeof actions.SET_CURRENT, 'string', 'actions.SET_CURRENT is a string');
   t.is(typeof actions.SET_TRACKS, 'string', 'actions.SET_TRACKS is a string');
   t.is(actions.SET_CURRENT, `${mountpoint}/SET_CURRENT`, 'mountpoint argument is valid');
