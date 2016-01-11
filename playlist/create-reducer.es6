@@ -25,6 +25,7 @@ export default function createReducer({SET_CURRENT, SET_TRACKS}, {END, PAUSE, PL
       const pausedIndex = state.tracks.indexOf(action.payload.id);
 
       if (pausedIndex === state.current) {
+        console.log('>>> EQUALS')
         nextState = {
           ...state,
           isPlaying: false
