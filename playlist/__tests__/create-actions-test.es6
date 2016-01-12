@@ -24,16 +24,10 @@ test('invoke playlist.create-actions with no args', t => {
   t.end();
 });
 
-test('invoke playlist.create-actions with string arg', t => {
+test('invoke playlist.create-actions with mountpoint arg', t => {
   const mountpoint = 'somethingElse';
   const actions = createActions(mountpoint);
 
-  t.is(typeof actions.nextOrStop, 'function', 'actions.nextOrStop is a function');
-  t.is(typeof actions.prevOrStop, 'function', 'actions.prevOrStop is a function');
-  t.is(typeof actions.setCurrent, 'function', 'actions.setCurrent is a function');
-  t.is(typeof actions.setTracks, 'function', 'actions.setTracks is a function');
-  t.is(typeof actions.SET_CURRENT, 'string', 'actions.SET_CURRENT is a string');
-  t.is(typeof actions.SET_TRACKS, 'string', 'actions.SET_TRACKS is a string');
   t.is(actions.SET_CURRENT, `${mountpoint}/SET_CURRENT`, 'mountpoint argument is valid');
 
   t.end();
