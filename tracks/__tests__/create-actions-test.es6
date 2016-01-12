@@ -15,7 +15,7 @@ const stateObj = {
       [id]: {
         didEnd: false,
         duration: 30,
-        id: id,
+        id,
         isLoading: false,
         isPlaying: false,
         isReady: true,
@@ -82,7 +82,7 @@ test('tracks.create-actions.end', t => {
   t.deepEquals(actions.end(id), {
     type: actions.END,
     payload: {
-      id: id
+      id
     },
   }, 'returns correct object');
 
