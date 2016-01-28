@@ -1,75 +1,101 @@
-// import * as actions from '../actions';
-// import createTestStore from 'redux-test';
+import { stub, spy } from 'sinon';
 import test from 'tape';
+import createActions from '../create-actions';
 
-test('TODO createReducer', t => t.end());
+const defaultMountpoint = 'playlist';
 
-// test('#actions', t => {
-//   t.equals(typeof actions.PAUSE, 'string', `has a PAUSE type ${actions.PAUSE}`);
-//   t.deepEquals(actions.pause(), {
-//     type: actions.PAUSE
-//   }, `has action creator for ${actions.PAUSE}: #pause`);
+test('playlist.create-actions', t => {
+  t.is(typeof createActions, 'function', `createActions is a function`);
 
+  t.end();
+});
 
-//   t.equals(typeof actions.PLAY, 'string', `has a PLAY type ${actions.PLAY}`);
-//   t.deepEquals(actions.play(), {
-//     type: actions.PLAY
-//   }, `has action creator for ${actions.PLAY}: #play`);
+test('invoke playlist.create-actions with no args', t => {
+  const actions = createActions();
 
-//   t.equals(typeof actions.SET_CURRENT, 'string', `has a SET_CURRENT type ${actions.SET_CURRENT}`);
-//   t.deepEquals(actions.setCurrent(1), {
-//     type: actions.SET_CURRENT,
-//     payload: {
-//       current: 1
-//     }
-//   }, `has action creator for ${actions.SET_CURRENT}: #setCurrent`);
+  t.is(typeof actions.nextOrStop, 'function', 'actions.nextOrStop is a function');
+  t.is(typeof actions.prevOrStop, 'function', 'actions.prevOrStop is a function');
+  t.is(typeof actions.setCurrent, 'function', 'actions.setCurrent is a function');
+  t.is(typeof actions.setTracks, 'function', 'actions.setTracks is a function');
+  t.is(typeof actions.SET_CURRENT, 'string', 'actions.SET_CURRENT is a string');
+  t.is(typeof actions.SET_TRACKS, 'string', 'actions.SET_TRACKS is a string');
+  t.is(actions.SET_CURRENT, `${defaultMountpoint}/SET_CURRENT`, 'default mountpoint is playlist');
 
-//   t.equals(typeof actions.SET_PLAYLIST, 'string', `has a SET_PLAYLIST type ${actions.SET_PLAYLIST}`);
-//   t.deepEquals(actions.setPlaylist('playlist'), {
-//     type: actions.SET_PLAYLIST,
-//     payload: {
-//       playlist: 'playlist'
-//     }
-//   }, `has action creator for ${actions.SET_PLAYLIST}: #setPlaylist`);
+  t.end();
+});
 
-//   const nextOrStopThunk = actions.nextOrStop();
+test('invoke playlist.create-actions with mountpoint arg', t => {
+  const mountpoint = 'somethingElse';
+  const actions = createActions(mountpoint);
 
-//   t.equals(typeof nextOrStopThunk, 'function', 'has nextOrStop action that returns a thunk');
+  t.is(actions.SET_CURRENT, `${mountpoint}/SET_CURRENT`, 'mountpoint argument is valid');
 
-//   // when we're playing the last item on the list we should reset and pause
-//   const playingLastItemStore = createTestStore({
-//     playpause: {
-//       current: 2,
-//       isPlaying: true,
-//       playlist: ['a', 'b', 'c']
-//     }
-//   });
-//   nextOrStopThunk(playingLastItemStore.dispatch, playingLastItemStore.getState);
-//   t.deepEquals(
-//     playingLastItemStore.dispatch.firstCall.args[0],
-//     actions.setCurrent(0),
-//     'dispatch reset the current index to 0 when we reached the end of the playlist'
-//   );
-//   t.deepEquals(
-//     playingLastItemStore.dispatch.secondCall.args[0],
-//     actions.pause(),
-//     'dispatch pause when we reached the end of the playlist'
-//   );
+  t.end();
+});
 
-//   // when we're playing somewhere in between, jump to the next index
-//   const stillPlayingStore = createTestStore({
-//     playpause: {
-//       current: 1,
-//       isPlaying: true,
-//       playlist: ['a', 'b', 'c']
-//     }
-//   });
-//   nextOrStopThunk(stillPlayingStore.dispatch, stillPlayingStore.getState);
-//   t.deepEquals(
-//     stillPlayingStore.dispatch.firstCall.args[0],
-//     actions.setCurrent(2),
-//     'dispatch the next index when there are still files to play'
-//   );
+test('playlist.create-actions.nextOrStop', t => {
+  const actions = createActions();
+  const dispatch = spy();
+  const currentValue = 1;
+  const getState = stub().returns({
+    [defaultMountpoint]: {
+      current: currentValue,
+      isPlaying: true,
+      tracks: ['tune1.mp3', 'tune2.mp3', 'tune3.pm3']
+    }
+  });
+  const thunk = actions.nextOrStop();
 
-//   t.end();
-// });
+  thunk(dispatch, getState);
+
+  t.is(typeof thunk, 'function', 'calling actions.nextOrStop() returns a function');
+  t.is(typeof dispatch.firstCall.args[0], 'function', 'dispatch is called with the first argument as a function');
+  t.is(dispatch.firstCall.args[0].name, 'setCurrentThunk', 'calls dispatch with setCurrentThunk as first argument')
+
+  t.end();
+});
+
+test('playlist.create-actions.prevOrStop', t => {
+  const actions = createActions();
+  const dispatch = spy();
+  const currentValue = 1;
+  const getState = stub().returns({
+    [defaultMountpoint]: {
+      current: currentValue,
+      isPlaying: true,
+      tracks: ['tune1.mp3', 'tune2.mp3', 'tune3.pm3']
+    }
+  });
+  const thunk = actions.prevOrStop();
+
+  thunk(dispatch, getState);
+
+  t.is(typeof thunk, 'function', 'calling actions.prevOrStop() returns a function');
+  t.is(typeof dispatch.firstCall.args[0], 'function', ' dispatch is called with the first argument as a function');
+  t.is(dispatch.firstCall.args[0].name, 'setCurrentThunk', 'calls dispatch with setCurrentThunk as first argument')
+
+  t.end();
+});
+
+test('playlist.create-actions.setCurrent', t => {
+  const actions = createActions();
+  const dispatch = spy();
+  const currentValue = 1;
+  const getState = stub().returns({
+    [defaultMountpoint]: {
+      current: currentValue,
+      isPlaying: true,
+      tracks: ['tune1.mp3', 'tune2.mp3', 'tune3.pm3']
+    }
+  });
+  const thunk = actions.setCurrent(currentValue + 1);
+
+  thunk(dispatch, getState);
+
+  t.is(typeof thunk, 'function', 'calling actions.prevOrStop() returns a function');
+  t.is(typeof dispatch.firstCall.args[0], 'object', ' dispatch is called with the first argument as a object');
+  t.is(dispatch.firstCall.args[0].type, `${defaultMountpoint}/SET_CURRENT`, 'the set current action is dispatched');
+  t.is(dispatch.firstCall.args[0].payload.current, currentValue + 1, 'the correct payload is dispatched');
+
+  t.end();
+});
