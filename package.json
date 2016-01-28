@@ -27,10 +27,10 @@
   },
   "scripts": {
     "build": "babel --extensions .es6 --ignore node_modules/**,__tests__/**,playground/** --out-dir . .",
-    "build:watch": "babel --watch --extensions .es6 --ignore node_modules/**,__tests__/** --out-dir . .",
+    "build:watch": "babel --watch--extensions .es6 --ignore node_modules/**,__tests__/** --out-dir . .",
     "clean": "find . -name '*.js*' -type f -not -path './package.json' -not -path './node_modules/*' -exec rm {} \\;",
     "prepublish": "npm run build",
-    "start": "watchify --debug --verbose --extension .es6 --outfile playground/app.js playground/app.es6 & static playground --cache 0 -a 0.0.0.0 -p 3000",
+    "start": "watchify --debug --verbose --extension .es6 --transform babelify --outfile playground/app.js playground/app.es6 & static playground --cache 0 -a 0.0.0.0 -p 3000",
     "test": "NODE_ENV=test babel-node node_modules/.bin/tape **/__tests__/*-test.es6",
     "test:watch": "NODE_ENV=test nodemon --ext js,es6 --watch . --exec babel-node -- node_modules/.bin/tape **/__tests__/*-test.es6"
   },
@@ -53,10 +53,5 @@
     "url": "https://github.com/UXtemple/playpause/issues"
   },
   "homepage": "https://github.com/UXtemple/playpause#readme",
-  "author": "Darío Javier Cravero <dario@uxtemple.com>",
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  }
+  "author": "Darío Javier Cravero <dario@uxtemple.com>"
 }
