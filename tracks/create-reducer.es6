@@ -68,7 +68,6 @@ export default function createReducer({END, JUMP, LOAD, PAUSE, PLAY, STOP, TICK}
 
         nextTrack = {
           ...state[id],
-          didEnd: true,
           isPlaying: false,
           time: 0
         };
