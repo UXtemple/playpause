@@ -15,7 +15,7 @@ export default function createActions(nodes, mountPoint='tracks') {
   function jump(id, to) {
     return function jumpThunk(dispatch, getState) {
       const track = dotKey(mountPoint, getState())[id];
-      
+
       if (track && track.isReady) {
         if (nodes.jump(id, to)) {
           dispatch({
@@ -92,7 +92,7 @@ export default function createActions(nodes, mountPoint='tracks') {
     return function stopThunk(dispatch, getState) {
       const track = dotKey(mountPoint, getState())[id];
 
-      if (track && track.isReady && track.isPlaying) {
+      if (track && track.isReady) {
         nodes.stop(id);
 
         dispatch({
