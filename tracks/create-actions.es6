@@ -92,7 +92,7 @@ export default function createActions(nodes, mountPoint='tracks') {
     return function stopThunk(dispatch, getState) {
       const track = dotKey(mountPoint, getState())[id];
 
-      if (track && track.isReady) {
+      if (track && track.isReady && track.isPlaying) {
         nodes.stop(id);
 
         dispatch({

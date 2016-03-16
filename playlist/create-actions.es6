@@ -1,6 +1,25 @@
 import dotKey from 'dot-key';
 
 export default function createActions(mountPoint='playlist') {
+  const HIT_BREAKPOINT = `${mountPoint}/HIT_BREAKPOINT`;
+  function hitBreakpoint() {
+    return function hitBreakpointThunk(dispatch, getState) {
+      const state = dotKey(mountPoint, getState());
+      // TODO fix this
+      // The action also needs to call stop or pause on the player, I think
+      const afterBreakPoint = state.current + 2;
+
+      if (afterBreakPoint < state.tracks.length) {
+        dispatch({
+          type: HIT_BREAKPOINT,
+          payload: {
+            current: afterBreakPoint
+          }
+        });
+      }
+    }
+  }
+
   function nextOrStop() {
     return function nextOrStopThunk(dispatch, getState) {
       const state = dotKey(mountPoint, getState());
@@ -50,6 +69,8 @@ export default function createActions(mountPoint='playlist') {
   }
 
   return {
+    HIT_BREAKPOINT,
+    hitBreakpoint,
     nextOrStop,
     prevOrStop,
     SET_CURRENT,
