@@ -44,7 +44,6 @@ export default function createReducer({HIT_BREAKPOINT, SET_CURRENT, SET_TRACKS},
       }
       break;
 
-    // TODO - this may need looking at
     case HIT_BREAKPOINT:
       nextState = {
         ...state,
@@ -52,7 +51,6 @@ export default function createReducer({HIT_BREAKPOINT, SET_CURRENT, SET_TRACKS},
         isPlaying: false
       };
       break;
-
 
     case SET_CURRENT:
       nextState = {
