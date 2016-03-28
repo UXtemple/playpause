@@ -2,7 +2,7 @@ import * as playlist from './playlist';
 import * as tracks from './tracks';
 
 const {END, JUMP, LOAD, PAUSE, PLAY, STOP, TICK} = tracks.actions;
-const {SET_CURRENT, SET_TRACKS} = playlist.actions;
+const {HIT_BREAKPOINT, SET_CURRENT, SET_TRACKS} = playlist.actions;
 
 const DEFAULT = {
   playlist: playlist.reducer(undefined, {type: '@@redux/INIT'}),
@@ -21,7 +21,8 @@ export default function playpauseReducer(state=DEFAULT, action) {
         tracks: tracks.reducer(state.tracks, action)
       };
       break;
-
+      
+    case HIT_BREAKPOINT:
     case SET_CURRENT:
     case SET_TRACKS:
       nextState = {
