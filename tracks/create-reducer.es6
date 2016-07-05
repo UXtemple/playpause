@@ -59,7 +59,7 @@ export default function createReducer({END, JUMP, LOAD, MUTE, PAUSE, PLAY, STOP,
 
         nextTrack = {
           ...state[id],
-          isMute: true
+          isMuted: true
         };
         break;
 
@@ -98,7 +98,7 @@ export default function createReducer({END, JUMP, LOAD, MUTE, PAUSE, PLAY, STOP,
 
         nextTrack = {
           ...state[id],
-          isMute: false
+          isMuted: false
         };
         break;
     }

@@ -146,7 +146,7 @@ export default function createActions(nodes, mountPoint='tracks') {
       const track = dotKey(mountPoint, getState())[id];
 
       if (track && track.isReady && track.isPlaying) {
-        nodes.unmute(id);
+        nodes.unMute(id);
 
         dispatch({
           type: UNMUTE,
