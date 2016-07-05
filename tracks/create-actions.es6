@@ -51,6 +51,24 @@ export default function createActions(nodes, mountPoint='tracks') {
     };
   }
 
+  const MUTE = `${mountPoint}/MUTE`;
+  function mute(id) {
+    return function muteThunk(dispatch, getState) {
+      const track = dotKey(mountPoint, getState())[id];
+
+      if (track && track.isReady && track.isPlaying) {
+        nodes.mute(id);
+
+        dispatch({
+          type: MUTE,
+          payload: {
+            id
+          }
+        });
+      }
+    }
+  }
+
   const PAUSE = `${mountPoint}/PAUSE`;
   function pause(id) {
     return function pauseThunk(dispatch, getState) {
@@ -122,6 +140,24 @@ export default function createActions(nodes, mountPoint='tracks') {
     }
   }
 
+  const UNMUTE = `${mountPoint}/UNMUTE`;
+  function unMute(id) {
+    return function unMuteThunk(dispatch, getState) {
+      const track = dotKey(mountPoint, getState())[id];
+
+      if (track && track.isReady && track.isPlaying) {
+        nodes.unmute(id);
+
+        dispatch({
+          type: UNMUTE,
+          payload: {
+            id
+          }
+        });
+      }
+    }
+  }
+
   return {
     END,
     end,
@@ -129,6 +165,8 @@ export default function createActions(nodes, mountPoint='tracks') {
     jump,
     LOAD,
     load,
+    MUTE,
+    mute,
     PAUSE,
     pause,
     PLAY,
@@ -136,6 +174,8 @@ export default function createActions(nodes, mountPoint='tracks') {
     STOP,
     stop,
     TICK,
-    tick
+    tick,
+    UNMUTE,
+    unMute
   };
 }
