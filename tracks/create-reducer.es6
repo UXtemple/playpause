@@ -1,4 +1,4 @@
-export default function createReducer({END, JUMP, LOAD, PAUSE, PLAY, STOP, TICK}) {
+export default function createReducer({END, JUMP, LOAD, MUTE, PAUSE, PLAY, STOP, TICK, UNMUTE}) {
   return function tracksReducer(state={}, action) {
     let nextState = state;
     let id;
@@ -54,6 +54,15 @@ export default function createReducer({END, JUMP, LOAD, PAUSE, PLAY, STOP, TICK}
         }
         break;
 
+      case MUTE:
+        id = action.payload.id;
+
+        nextTrack = {
+          ...state[id],
+          isMuted: true
+        };
+        break;
+
       case PAUSE:
         id = action.payload.id;
 
@@ -83,6 +92,15 @@ export default function createReducer({END, JUMP, LOAD, PAUSE, PLAY, STOP, TICK}
         break;
 
       default: break;
+
+      case UNMUTE:
+        id = action.payload.id;
+
+        nextTrack = {
+          ...state[id],
+          isMuted: false
+        };
+        break;
     }
 
     if (id && nextTrack) {
