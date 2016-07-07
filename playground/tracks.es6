@@ -1,13 +1,16 @@
 import * as nodes from './nodes';
 import * as tracks from '../tracks';
 import { connect } from 'react-redux';
-import createKnockKnockGo from 'knock-knock-go';
 import React, { Component as ReactComponent } from 'react';
 
 export const actions = tracks.createActions(nodes, 'playpause.tracks');
 export const reducer = tracks.createReducer(actions);
 
 class Track extends ReactComponent {
+  componentDidMount() {
+    this.props.dispatch(actions.load(this.props.id))
+  }
+
   render() {
     const { props } = this;
 
@@ -33,17 +36,8 @@ class Track extends ReactComponent {
   }
 }
 
-const knockKnockGo = createKnockKnockGo();
-
-const KnockKnockTrack = knockKnockGo(
-  props => props.isLoading && !props.isReady,
-  props => props.error,
-  Track,
-  props => !(props.isLoading || props.isReady) && props.dispatch(actions.load(props.id))
-);
-
 function mapStateToProps(state, props) {
   return state.playpause.tracks[props.id] || {};
 }
 
-export const Component = connect(mapStateToProps)(KnockKnockTrack);
+export const Component = connect(mapStateToProps)(Track);
