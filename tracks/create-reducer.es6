@@ -48,6 +48,8 @@ export default function createReducer({END, JUMP, LOAD, MUTE, PAUSE, PLAY, STOP,
           nextTrack = {
             ...state[id],
             duration: action.payload.duration,
+            clipBegin: action.payload.clipBegin,
+            clipEnd: action.payload.clipEnd,
             isLoading: false,
             isReady: true
           };

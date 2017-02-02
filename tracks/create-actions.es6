@@ -31,20 +31,16 @@ export default function createActions(nodes, mountPoint='tracks') {
   }
 
   const LOAD = `${mountPoint}/LOAD`;
-  function load(id, src=id) {
+  function load(trackDetails) {
     return function loadThunk(dispatch, getState) {
-      const track = dotKey(mountPoint, getState())[id];
+      const track = dotKey(mountPoint, getState())[trackDetails.src];
 
       if (typeof track === 'undefined') {
         dispatch({
           type: LOAD,
-          payload: nodes.load({
-            id,
-            onEnd: () => dispatch(end(id)),
-            src
-          }),
+          payload: nodes.load({ trackDetails, onEnd: () => dispatch(end(trackDetails.src)) }),
           meta: {
-            id
+            id: trackDetails.src
           }
         });
       }
